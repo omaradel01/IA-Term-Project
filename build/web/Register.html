@@ -1,0 +1,194 @@
+<!DOCTYPE html>
+<!--
+To change this license header, choose License Headers in Project Properties.
+To change this template file, choose Tools | Templates
+and open the template in the editor.
+-->
+<html>
+    <head>
+        <title>Hotel Reservation | Register</title>
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+        <link rel="stylesheet" href="css/bootstrap.min.css">
+        <link rel="preconnect" href="https://fonts.gstatic.com">
+        <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/animate.css/4.1.1/animate.min.css"/>
+        <link href="https://fonts.googleapis.com/css2?family=Poppins:wght@300;500;700&display=swap" rel="stylesheet">
+        <link rel="stylesheet" href="css/all.min.css">
+        <link rel="stylesheet" href="css/styles.css">
+        <meta charset="UTF-8">
+        <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    </head>
+    <body>
+        <div class="register">
+            <div class="d-flex">
+                <div class="reg-side">
+                    <h1 class="header-1 main-color mb-2">Hotels Hero</h1>
+                    <p class="text">
+                        Check the highest ratings hotels with all information needed with just few steps
+                    </p>
+                    <img class="img-fluid" src="assets/banner-register.jpg">  
+                </div>
+                <div class="reg-form">
+                    
+                    <form id ="registeration_form" action="AddUser" autocomplete="off" onsubmit="return checkform(this);" required>
+                        <a href="Login.html" style="color: #007aab;">Already have an account ?</a>
+                        <div class="row mb-0">
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="FirstName">
+                                        First Name
+                                    </label>
+                                    <input id="FirstName" type="text" name="FirstName" class="form-control w-100 d-inline-block" value="" required/> 
+                                </div> 
+                            </div>
+                            <div class="col-md-6">
+                                <div class="form-group">
+                                    <label for="LastName">
+                                        Last Name
+                                    </label>
+                                    <input id = "LastName" type="text" name="LastName" class="form-control w-100 d-inline-block" value="" required/> 
+                                </div>
+                            </div>
+                        </div>
+                        <div>
+                            <div class="form-group">
+                                <label for="email">
+                                    Email
+                                </label>
+                                <input type="email" name="email" class="form-control" id="email" oninput="email_validation()" required/>
+                                <p style="color: #0000ff;" id="demo2"></p>
+                            </div>
+                            <div class="form-group">
+                                <label for="username">
+                                    Username
+                                </label>
+                                <input type="text" class="form-control" name="username" id="username" oninput="username_validation()" required/>
+                                <p style="color: #0000ff;" id="demo"></p>
+                            </div>
+                        </div>        
+                        <!-- START CAPTCHA -->
+                        <br>
+                        <div class="capbox d-flex align-items-center">
+                            <div id="CaptchaDiv"></div>
+                            <div class="capbox-inner">
+                                <input type="hidden" id="txtCaptcha">
+                                <input id ="CaptchaInput" type="text" name="CaptchaInput" class="form-control" placeholder="Enter the captcha" size="15">
+                            </div>
+                            <button class="btn btn-login" onclick="myFunction()">Try new Captcha</button>
+                        </div>
+                        <!--END CAPTCHA -->
+                        <input class="btn btn-login btn-block w-100" id="submit" type="submit" value="Register" disabled="" />
+                    </form>
+                </div>
+            </div>        
+        </div> 
+
+        <script type="text/javascript">
+            function myFunction() {
+                var a = Math.ceil(Math.random() * 9) + '';
+                var b = Math.ceil(Math.random() * 9) + '';
+                var c = Math.ceil(Math.random() * 9) + '';
+                var d = Math.ceil(Math.random() * 9) + '';
+                var e = Math.ceil(Math.random() * 9) + '';
+                var code = a + b + c + d + e;
+                document.getElementById("txtCaptcha").value = code;
+                document.getElementById("CaptchaDiv").innerHTML = code;
+            }
+            // Captcha Script
+            function checkform(theform) {
+                var why = "";
+
+                if (theform.CaptchaInput.value === "") {
+                    why += "- Please Enter CAPTCHA Code.\n";
+                }
+                if (theform.CaptchaInput.value !== "") {
+                    if (ValidCaptcha(theform.CaptchaInput.value) === false) {
+                        why += "- The CAPTCHA Code Does Not Match.\n";
+                    }
+                }
+                if (why !== "") {
+                    alert(why);
+                    return false;
+                }
+                var username = document.getElementById("username").value;
+                var email = document.getElementById("email").value;
+                var FirstName = document.getElementById("FirstName").value;
+                var LastName = document.getElementById("LastName").value;
+                if (username === "" || username === null || email === "" || email === null ||
+                        FirstName === "" || FirstName === null || LastName === "" || LastName === null) {
+                    alert("All the Fields must be filled out to register.");
+                    return false;
+                }
+            }
+            var a = Math.ceil(Math.random() * 9) + '';
+            var b = Math.ceil(Math.random() * 9) + '';
+            var c = Math.ceil(Math.random() * 9) + '';
+            var d = Math.ceil(Math.random() * 9) + '';
+            var e = Math.ceil(Math.random() * 9) + '';
+            var code = a + b + c + d + e;
+            document.getElementById("txtCaptcha").value = code;
+            document.getElementById("CaptchaDiv").innerHTML = code;
+
+            // Validate input against the generated number
+            function ValidCaptcha() {
+                var str1 = removeSpaces(document.getElementById('txtCaptcha').value);
+                var str2 = removeSpaces(document.getElementById('CaptchaInput').value);
+                if (str1 === str2) {
+                    return true;
+                } else {
+                    return false;
+                }
+            }
+
+            // Remove the spaces from the entered and generated code
+            function removeSpaces(string) {
+                return string.split(' ').join('');
+            }
+            
+            function username_validation() {
+                var username = document.getElementById("username").value;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", "validate_username?username=" + username, true);
+                xmlhttp.send();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                        var msg = xmlhttp.responseText;
+                        var link = document.getElementById("submit");
+                        if (msg.length > 0) {
+                            document.getElementById("demo").innerHTML = msg;
+                            link.setAttribute("disabled", "");
+                        } else {
+                            document.getElementById("demo").innerHTML = "";
+                            if (document.getElementById("demo2").innerHTML === "" ||
+                                    document.getElementById("demo2").innerHTML === null) {
+                                link.removeAttribute("disabled");
+                            }
+                        }
+                    }
+                };
+            }
+            function email_validation() {
+                var email = document.getElementById("email").value;
+                var xmlhttp = new XMLHttpRequest();
+                xmlhttp.open("GET", "validate_email?email=" + email, true);
+                xmlhttp.send();
+                xmlhttp.onreadystatechange = function () {
+                    if (xmlhttp.readyState === 4 && xmlhttp.status === 200) {
+                        var msg = xmlhttp.responseText;
+                        var link = document.getElementById("submit");
+                        if (msg.length > 0) {
+                            document.getElementById("demo2").innerHTML = msg;
+                            link.setAttribute("disabled", "");
+                        } else {
+                            document.getElementById("demo2").innerHTML = "";
+                            if (document.getElementById("demo").innerHTML === "" ||
+                                    document.getElementById("demo").innerHTML === null) {
+                                link.removeAttribute("disabled");
+                            }
+                        }
+                    }
+                };
+            }
+        </script>
+    </body>
+</html>
